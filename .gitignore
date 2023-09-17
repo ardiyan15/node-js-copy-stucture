@@ -1,4 +1,8 @@
-frontend
-backend
-middleend
+# frontend
+# backend
+# middleend
+# library
 *.txt
+node_modules/
+.env
+# /*

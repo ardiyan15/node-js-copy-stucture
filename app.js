@@ -1,7 +1,13 @@
-let fs = require('fs')
-let pathObjects = fs.readFileSync('path_object.txt').toString().split("\n")
+const fs = require('fs')
+require('dotenv').config()
 
+const listPath = process.env.LIST_PATH
+const sourcePath = process.env.SOURCE_PATH
+const destinationPath = process.env.DESTINATION_PATH
+
+const pathObjects = fs.readFileSync(listPath).toString().split("\n")
 let nameFolder = '';
+
 for(i in pathObjects) {
     let subFolder = pathObjects[i].split("\\")
     for(let j = 0; j < subFolder.length; j++) {
@@ -13,12 +19,12 @@ for(i in pathObjects) {
             }
         } else {
             let removeEnter = subFolder[j].replace("\r", " ")
-            let fullPath = `C:/laragon/www/bsi-fo/cms/${nameFolder}${removeEnter}`.replace(/\/\//g, "/")
-            let destPath = `C:/Users/SGO-Kelvin/Desktop/ARDIYAN/Projects/node-txt/${nameFolder}${removeEnter}`
+            let fullPath = `${sourcePath}${nameFolder}${removeEnter}`.replace(/\/\//g, "/")
+            let destPath = `${destinationPath}${nameFolder}${removeEnter}`
             fs.copyFile(fullPath.trim(), destPath.trim(), (err) => {
-                console.log(`Copying file from ${fullPath} => ${destPath}`)
+                console.log('Copying File From ' + '\x1b[32m%s\x1b[32m', `${fullPath}To ${destPath}`); 
+                console.log("\n")
                 if(err) throw err
-                console.log('success')
             })
         }
         if(subFolder[j].includes('.')) {
